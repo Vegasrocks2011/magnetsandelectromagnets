@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetism & Electromagnetism — Self Assessment</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --border: #e0ddd6;
+    --text: #1a1916;
+    --muted: #6b6860;
+    --accent: #1a3d6b;
+    --accent-light: #e8eef7;
+    --red: #c0392b;
+    --red-light: #fdf0ee;
+    --amber: #c07b00;
+    --amber-light: #fdf7e8;
+    --green: #1a6b3a;
+    --green-light: #eaf4ee;
+    --r: 6px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── layout ── */
+  .app { max-width: 860px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 2rem 2rem 1.5rem;
+    border-radius: var(--r);
+    margin-bottom: 1.5rem;
+  }
+  header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: .25rem; }
+  header p  { font-size: .875rem; opacity: .75; }
+
+  /* ── nav tabs ── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab {
+    padding: .5rem 1rem;
+    border-radius: var(--r);
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: .85rem;
+    font-family: var(--font);
+    color: var(--muted);
+    transition: all .15s;
+  }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+  /* ── section ── */
+  .section { display: none; }
+  .section.visible { display: block; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .75rem; }
+  .card h4 { font-size: .875rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .5rem; }
+
+  /* ── formulas ── */
+  .formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: .75rem; }
+  .formula-box {
+    background: var(--accent-light);
+    border: 1px solid #c4d4e8;
+    border-radius: var(--r);
+    padding: .875rem 1rem;
+  }
+  .formula-box .label { font-size: .78rem; color: var(--accent); font-weight: 600; margin-bottom: .3rem; }
+  .formula-box .eq { font-family: var(--mono); font-size: .95rem; color: var(--accent); }
+  .formula-box .desc { font-size: .8rem; color: var(--muted); margin-top: .25rem; }
+
+  /* ── keywords ── */
+  .kw-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .kw {
+    background: #f0ede8;
+    border-radius: 20px;
+    padding: .25rem .75rem;
+    font-size: .82rem;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* ── RAG ── */
+  .spec-item {
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1rem 1.25rem;
+    margin-bottom: .75rem;
+    background: var(--surface);
+    transition: border-color .2s;
+  }
+  .spec-item .ref { font-size: .75rem; font-family: var(--mono); color: var(--muted); margin-bottom: .25rem; }
+  .spec-item .text { font-size: .92rem; margin-bottom: .75rem; }
+  .spec-item .p-flag { display: inline-block; font-size: .7rem; background: #e8e0f0; color: #5a3a8a; border-radius: 4px; padding: 1px 6px; margin-left: 6px; font-weight: 600; }
+  .rag-buttons { display: flex; gap: .5rem; }
+  .rag-btn {
+    flex: 1;
+    padding: .4rem .5rem;
+    border-radius: var(--r);
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-size: .82rem;
+    font-family: var(--font);
+    font-weight: 500;
+    transition: all .15s;
+  }
+  .rag-btn.R { border-color: var(--red); color: var(--red); }
+  .rag-btn.A { border-color: var(--amber); color: var(--amber); }
+  .rag-btn.G { border-color: var(--green); color: var(--green); }
+  .rag-btn.R.sel { background: var(--red); color: #fff; }
+  .rag-btn.A.sel { background: var(--amber); color: #fff; }
+  .rag-btn.G.sel { background: var(--green); color: #fff; }
+
+  .spec-item.rated-R { border-color: var(--red); background: var(--red-light); }
+  .spec-item.rated-A { border-color: var(--amber); background: var(--amber-light); }
+  .spec-item.rated-G { border-color: var(--green); background: var(--green-light); }
+
+  .section-heading {
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin: 1.5rem 0 .75rem;
+  }
+
+  /* ── quiz ── */
+  .quiz-item {
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background: var(--surface);
+  }
+  .quiz-item .q-ref { font-size: .75rem; font-family: var(--mono); color: var(--muted); margin-bottom: .4rem; }
+  .quiz-item .q-text { font-size: .95rem; font-weight: 500; margin-bottom: .875rem; }
+  .options { display: flex; flex-direction: column; gap: .4rem; }
+  .opt-btn {
+    text-align: left;
+    padding: .6rem .875rem;
+    border-radius: var(--r);
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: .88rem;
+    color: var(--text);
+    transition: all .15s;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .opt-btn.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .opt-btn.wrong   { background: var(--red-light);   border-color: var(--red);   color: var(--red); }
+  .opt-btn:disabled { cursor: default; }
+  .feedback { font-size: .83rem; margin-top: .625rem; padding: .5rem .75rem; border-radius: 4px; }
+  .feedback.ok  { background: var(--green-light); color: var(--green); }
+  .feedback.bad { background: var(--red-light); color: var(--red); }
+
+  /* ── results ── */
+  .results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .75rem; margin-bottom: 1.5rem; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1rem; text-align: center; }
+  .stat-card .big { font-size: 2rem; font-weight: 600; }
+  .stat-card .lbl { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+  .stat-card.r .big { color: var(--red); }
+  .stat-card.a .big { color: var(--amber); }
+  .stat-card.g .big { color: var(--green); }
+
+  .priority-list { list-style: none; }
+  .priority-list li {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .625rem .875rem;
+    border-radius: var(--r);
+    margin-bottom: .5rem;
+    font-size: .9rem;
+  }
+  .priority-list li.hi { background: var(--red-light); border: 1px solid #e8c0bc; }
+  .priority-list li.md { background: var(--amber-light); border: 1px solid #e8d8b0; }
+  .badge { font-size: .72rem; font-family: var(--mono); padding: 2px 6px; border-radius: 3px; background: rgba(0,0,0,.08); flex-shrink: 0; }
+
+  /* ── practice ── */
+  .pq-item {
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background: var(--surface);
+  }
+  .pq-item.flagged { border-color: var(--red); }
+  .pq-item .pq-ref { font-size: .75rem; font-family: var(--mono); color: var(--muted); margin-bottom: .3rem; }
+  .pq-item .pq-tag { font-size: .72rem; background: var(--red-light); color: var(--red); border-radius: 3px; padding: 1px 6px; margin-left: 6px; font-weight: 600; }
+  .pq-item .pq-q { font-size: .95rem; font-weight: 500; margin-bottom: .875rem; }
+  .score-bar { height: 8px; border-radius: 4px; background: var(--border); margin: .5rem 0 1rem; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 4px; background: var(--green); transition: width .6s; }
+
+  /* ── buttons ── */
+  .btn {
+    display: inline-block;
+    padding: .6rem 1.25rem;
+    border-radius: var(--r);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: .9rem;
+    font-weight: 500;
+    transition: all .15s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { opacity: .88; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); }
+  .btn-outline:hover { background: var(--accent-light); }
+
+  .actions { display: flex; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+
+  /* ── progress ── */
+  .progress-row { display: flex; justify-content: space-between; font-size: .82rem; color: var(--muted); margin-bottom: .3rem; }
+  .prog-bar { height: 6px; border-radius: 3px; background: var(--border); margin-bottom: 1rem; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width .4s; }
+
+  .info-box { background: var(--accent-light); border: 1px solid #c4d4e8; border-radius: var(--r); padding: .875rem 1rem; font-size: .88rem; color: var(--accent); margin-bottom: 1rem; }
+
+  @media(max-width:520px){
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .formula-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── submit modal ── */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    max-width: 580px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+  .modal p  { font-size: .88rem; color: var(--muted); margin-bottom: 1rem; }
+  .modal-step {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .modal-step .step-num {
+    font-size: .72rem; font-weight: 600; font-family: var(--mono);
+    color: var(--accent); text-transform: uppercase; letter-spacing: .05em;
+    margin-bottom: .4rem;
+  }
+  .modal-step label { font-size: .85rem; font-weight: 500; display: block; margin-bottom: .4rem; }
+  .modal-step .copy-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: .6rem .75rem;
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--text);
+    word-break: break-all;
+    line-height: 1.5;
+    margin-bottom: .5rem;
+    white-space: pre-wrap;
+  }
+  .btn-copy {
+    display: inline-block;
+    padding: .35rem .875rem;
+    border-radius: var(--r);
+    border: 1.5px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-family: var(--font);
+    font-size: .82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .btn-copy:hover { background: var(--accent-light); }
+  .btn-copy.copied { background: var(--green); border-color: var(--green); color: #fff; }
+  .modal-actions { display: flex; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+  .submit-banner {
+    background: var(--accent);
+    color: #fff;
+    border-radius: var(--r);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .submit-banner p { color: rgba(255,255,255,.85); margin: 0; font-size: .88rem; }
+  .submit-banner h4 { color: #fff; font-size: .95rem; margin-bottom: .2rem; }
+  .btn-submit {
+    background: #fff;
+    color: var(--accent);
+    border: none;
+    border-radius: var(--r);
+    padding: .5rem 1.1rem;
+    font-family: var(--font);
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .15s;
+    flex-shrink: 0;
+  }
+  .btn-submit:hover { opacity: .88; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <h1>Magnetism &amp; Electromagnetism</h1>
+    <p>Pearson Edexcel International GCSE Physics (4PH1) — Unit 7 Self-Assessment</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('ref')">📋 Reference</button>
+    <button class="tab" onclick="showTab('rag')">🚦 RAG Check</button>
+    <button class="tab" onclick="showTab('diag')">🔍 Diagnostic Quiz</button>
+    <button class="tab" onclick="showTab('results')">📊 My Results</button>
+    <button class="tab" onclick="showTab('practice')">✏️ Practice Questions</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TAB 1 — REFERENCE
+  ═══════════════════════════════════════ -->
+  <div id="tab-ref" class="section visible">
+
+    <div class="card">
+      <h3>Formulas you need to know</h3>
+      <div class="formula-grid">
+        <div class="formula-box">
+          <div class="label">Transformer voltage ratio (7.19P)</div>
+          <div class="eq">Vp / Vs = np / ns</div>
+          <div class="desc">Vp = primary voltage, Vs = secondary voltage, np = primary turns, ns = secondary turns</div>
+        </div>
+        <div class="formula-box">
+          <div class="label">Transformer power (100% efficiency) (7.20P)</div>
+          <div class="eq">Vp × Ip = Vs × Is</div>
+          <div class="desc">Input power = output power. Ip = primary current, Is = secondary current</div>
+        </div>
+        <div class="formula-box">
+          <div class="label">Units you must use (7.1)</div>
+          <div class="eq">A, V, W</div>
+          <div class="desc">Ampere (current), Volt (voltage/EMF), Watt (power)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Key words &amp; definitions</h3>
+      <div class="kw-grid">
+        <span class="kw">Magnetic field</span>
+        <span class="kw">Field line</span>
+        <span class="kw">Magnetically hard</span>
+        <span class="kw">Magnetically soft</span>
+        <span class="kw">Induced magnetism</span>
+        <span class="kw">Uniform field</span>
+        <span class="kw">Electromagnet</span>
+        <span class="kw">Solenoid</span>
+        <span class="kw">Fleming's left-hand rule</span>
+        <span class="kw">Motor effect</span>
+        <span class="kw">d.c. motor</span>
+        <span class="kw">Loudspeaker</span>
+        <span class="kw">Electromagnetic induction</span>
+        <span class="kw">Induced voltage (EMF)</span>
+        <span class="kw">Generator</span>
+        <span class="kw">Alternating current (a.c.)</span>
+        <span class="kw">Transformer</span>
+        <span class="kw">Step-up transformer</span>
+        <span class="kw">Step-down transformer</span>
+        <span class="kw">Primary coil</span>
+        <span class="kw">Secondary coil</span>
+        <span class="kw">Turns ratio</span>
+        <span class="kw">National Grid</span>
+        <span class="kw">Charged particle</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>Key word definitions</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.5rem;margin-top:.25rem;">
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Magnetically hard</strong> — material that is difficult to magnetise but keeps its magnetism (e.g. steel). Used for permanent magnets.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Magnetically soft</strong> — material that is easy to magnetise and loses its magnetism quickly (e.g. iron). Used for electromagnets.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Induced magnetism</strong> — when a magnetic material is placed in a field and becomes a temporary magnet itself.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Solenoid</strong> — a coil of wire; when current flows it produces a field like a bar magnet.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Fleming's left-hand rule</strong> — thumb = force (motion), index = field, middle finger = current. Gives direction of force on a wire.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Electromagnetic induction</strong> — creating a voltage by moving a conductor through a magnetic field or changing the field through a coil.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Step-up transformer</strong> — increases voltage (more turns on secondary). Used to transmit electricity at high voltage.</div>
+        <div style="font-size:.85rem;padding:.5rem 0;border-bottom:1px solid var(--border);"><strong>Step-down transformer</strong> — decreases voltage (fewer turns on secondary). Used to make electricity safe for homes.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TAB 2 — RAG SELF-ASSESSMENT
+  ═══════════════════════════════════════ -->
+  <div id="tab-rag" class="section">
+
+    <div class="info-box">
+      Rate yourself honestly for each spec point. <strong>Red</strong> = I don't get this at all. <strong>Amber</strong> = I kind of understand it. <strong>Green</strong> = I'm confident with this.
+    </div>
+
+    <div class="progress-row"><span>Progress</span><span id="rag-count">0 / 17 rated</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="rag-prog" style="width:0%"></div></div>
+
+    <p class="section-heading">7(a) Units</p>
+    <div class="spec-item" id="si-7.1" data-ref="7.1">
+      <div class="ref">7.1</div>
+      <div class="text">I can use the correct units: <strong>ampere (A)</strong> for current, <strong>volt (V)</strong> for voltage and <strong>watt (W)</strong> for power.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.1','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.1','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.1','G')">🟢 Got it</button>
+      </div>
+    </div>
+
+    <p class="section-heading">7(b) Magnetism</p>
+    <div class="spec-item" id="si-7.2" data-ref="7.2">
+      <div class="ref">7.2</div>
+      <div class="text">I know that magnets can <strong>repel and attract</strong> other magnets, and that they <strong>attract magnetic materials</strong> like iron and steel.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.2','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.2','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.2','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.3" data-ref="7.3">
+      <div class="ref">7.3</div>
+      <div class="text">I can describe the difference between <strong>magnetically hard</strong> materials (keep magnetism — e.g. steel) and <strong>magnetically soft</strong> materials (lose magnetism easily — e.g. iron).</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.3','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.3','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.3','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.4" data-ref="7.4">
+      <div class="ref">7.4</div>
+      <div class="text">I understand what a <strong>magnetic field line</strong> is — it shows the direction a north pole would move, and field lines never cross.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.4','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.4','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.4','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.5" data-ref="7.5">
+      <div class="ref">7.5</div>
+      <div class="text">I know that some materials become <strong>temporarily magnetised</strong> (induced magnetism) when placed in a magnetic field.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.5','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.5','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.5','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.6" data-ref="7.6">
+      <div class="ref">7.6 (Practical)</div>
+      <div class="text">I can describe how to investigate <strong>magnetic field patterns</strong> around a bar magnet and between two bar magnets using iron filings or a compass.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.6','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.6','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.6','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.7" data-ref="7.7">
+      <div class="ref">7.7</div>
+      <div class="text">I can describe how to use <strong>two permanent magnets</strong> (opposite poles facing) to produce a <strong>uniform magnetic field</strong> — where field lines are parallel and equally spaced.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.7','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.7','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.7','G')">🟢 Got it</button>
+      </div>
+    </div>
+
+    <p class="section-heading">7(c) Electromagnetism</p>
+    <div class="spec-item" id="si-7.8" data-ref="7.8">
+      <div class="ref">7.8</div>
+      <div class="text">I know that an <strong>electric current in a wire produces a magnetic field</strong> around that wire.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.8','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.8','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.8','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.9" data-ref="7.9">
+      <div class="ref">7.9P <span class="p-flag">Physics only</span></div>
+      <div class="text">I can describe how an <strong>electromagnet is constructed</strong> — a coil of wire (solenoid) wrapped around an iron core, with current flowing through it.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.9','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.9','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.9','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.10" data-ref="7.10">
+      <div class="ref">7.10P <span class="p-flag">Physics only</span></div>
+      <div class="text">I can draw the <strong>magnetic field patterns</strong> for a straight wire, a flat circular coil, and a solenoid when carrying a current.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.10','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.10','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.10','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.11" data-ref="7.11">
+      <div class="ref">7.11P <span class="p-flag">Physics only</span></div>
+      <div class="text">I know that a <strong>charged particle moving in a magnetic field</strong> experiences a force — unless it moves parallel to the field.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.11','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.11','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.11','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.12" data-ref="7.12">
+      <div class="ref">7.12</div>
+      <div class="text">I can explain why a <strong>current-carrying wire in a magnetic field experiences a force</strong> (the motor effect), and describe how this is used in a <strong>d.c. motor</strong> and a <strong>loudspeaker</strong>.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.12','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.12','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.12','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.13" data-ref="7.13">
+      <div class="ref">7.13</div>
+      <div class="text">I can use <strong>Fleming's left-hand rule</strong> to predict the direction of the force on a wire carrying a current perpendicular to a magnetic field.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.13','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.13','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.13','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.14" data-ref="7.14">
+      <div class="ref">7.14</div>
+      <div class="text">I can describe how the <strong>force on a wire changes</strong> when the strength of the field or the size/direction of the current changes.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.14','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.14','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.14','G')">🟢 Got it</button>
+      </div>
+    </div>
+
+    <p class="section-heading">7(d) Electromagnetic Induction</p>
+    <div class="spec-item" id="si-7.15" data-ref="7.15">
+      <div class="ref">7.15</div>
+      <div class="text">I know that a <strong>voltage is induced</strong> when a conductor moves through a field or when the field through a coil changes — and I can describe what affects the size of this voltage.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.15','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.15','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.15','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.16" data-ref="7.16">
+      <div class="ref">7.16</div>
+      <div class="text">I can describe how <strong>electricity is generated</strong> by rotating a magnet in a coil (or a coil in a field), and what affects the size of the induced voltage.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.16','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.16','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.16','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.17" data-ref="7.17">
+      <div class="ref">7.17P <span class="p-flag">Physics only</span></div>
+      <div class="text">I can describe the <strong>structure of a transformer</strong> and explain how it changes the size of an alternating voltage by having different numbers of turns on the primary and secondary coils.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.17','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.17','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.17','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.18" data-ref="7.18">
+      <div class="ref">7.18P <span class="p-flag">Physics only</span></div>
+      <div class="text">I can explain how <strong>step-up and step-down transformers</strong> are used in the National Grid to transmit electricity efficiently at high voltage.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.18','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.18','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.18','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.19" data-ref="7.19">
+      <div class="ref">7.19P <span class="p-flag">Physics only</span></div>
+      <div class="text">I can use the <strong>transformer voltage formula</strong>: Vp / Vs = np / ns, to calculate voltages and turns in a transformer.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.19','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.19','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.19','G')">🟢 Got it</button>
+      </div>
+    </div>
+    <div class="spec-item" id="si-7.20" data-ref="7.20">
+      <div class="ref">7.20P <span class="p-flag">Physics only</span></div>
+      <div class="text">I can use the <strong>power formula for a 100% efficient transformer</strong>: Vp × Ip = Vs × Is, to calculate currents and power.</div>
+      <div class="rag-buttons">
+        <button class="rag-btn R" onclick="setRag('7.20','R')">🔴 Not sure</button>
+        <button class="rag-btn A" onclick="setRag('7.20','A')">🟡 Getting there</button>
+        <button class="rag-btn G" onclick="setRag('7.20','G')">🟢 Got it</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="showTab('diag')">Go to Diagnostic Quiz →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TAB 3 — DIAGNOSTIC QUIZ
+  ═══════════════════════════════════════ -->
+  <div id="tab-diag" class="section">
+
+    <div class="info-box">
+      Answer all questions — these help identify exactly where to focus your revision. Spec points you rated Red or Amber appear first.
+    </div>
+    <div class="progress-row"><span>Questions answered</span><span id="diag-count">0 / 34</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="diag-prog" style="width:0%"></div></div>
+
+    <div id="diag-questions"></div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="showTab('results')">See My Results →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TAB 4 — RESULTS
+  ═══════════════════════════════════════ -->
+  <div id="tab-results" class="section">
+    <div id="results-content"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TAB 5 — PRACTICE QUESTIONS
+  ═══════════════════════════════════════ -->
+  <div id="tab-practice" class="section">
+    <div class="info-box">
+      Spec points flagged from your diagnostic quiz appear at the top. Work through those first, then do the rest.
+    </div>
+    <div class="progress-row"><span>Practice answered</span><span id="prac-count">0 / 34</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prac-prog" style="width:0%"></div></div>
+    <div id="practice-questions"></div>
+  </div>
+
+<div class="modal-backdrop" id="submit-modal">
+  <div class="modal">
+    <h3>Submit your results to your teacher</h3>
+    <p>Follow these three steps. Each box has a copy button — paste the text into the matching question on the Microsoft Form.</p>
+
+    <div class="modal-step">
+      <div class="step-num">Step 1 — Open the form</div>
+      <label>Click the button below to open the Microsoft Form in a new tab, then come back here for your results.</label>
+      <br>
+      <button class="btn-copy" onclick="window.open('YOUR_MICROSOFT_FORM_URL_HERE','_blank')">Open Microsoft Form ↗</button>
+    </div>
+
+    <div class="modal-step">
+      <div class="step-num">Step 2 — Your school email</div>
+      <label>Type your school email address into Question 1 on the form.</label>
+    </div>
+
+    <div class="modal-step">
+      <div class="step-num">Step 3 — Copy your RAG ratings → paste into Question 2</div>
+      <label>RAG Ratings (one per spec point)</label>
+      <div class="copy-box" id="rag-summary-text"></div>
+      <button class="btn-copy" id="copy-rag-btn" onclick="copyText('rag-summary-text','copy-rag-btn')">Copy RAG ratings</button>
+    </div>
+
+    <div class="modal-step">
+      <div class="step-num">Step 4 — Copy your diagnostic results → paste into Question 3</div>
+      <label>Diagnostic Quiz Summary</label>
+      <div class="copy-box" id="diag-summary-text"></div>
+      <button class="btn-copy" id="copy-diag-btn" onclick="copyText('diag-summary-text','copy-diag-btn')">Copy diagnostic summary</button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="window.open('YOUR_MICROSOFT_FORM_URL_HERE','_blank')">Open Form again ↗</button>
+      <button class="btn btn-outline" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .app -->
+// ════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════
+
+const SPEC_REFS = ['7.1','7.2','7.3','7.4','7.5','7.6','7.7','7.8','7.9','7.10','7.11','7.12','7.13','7.14','7.15','7.16','7.17','7.18','7.19','7.20'];
+
+const SPEC_LABELS = {
+  '7.1':'Units (A, V, W)',
+  '7.2':'Magnets — attract/repel',
+  '7.3':'Hard and soft magnetic materials',
+  '7.4':'Magnetic field lines',
+  '7.5':'Induced magnetism',
+  '7.6':'Practical — field patterns',
+  '7.7':'Uniform magnetic field',
+  '7.8':'Current produces a magnetic field',
+  '7.9':'Construction of electromagnets (P)',
+  '7.10':'Field patterns for wire/coil/solenoid (P)',
+  '7.11':'Force on charged particles (P)',
+  '7.12':'Motor effect — motor & loudspeaker',
+  '7.13':'Fleming\'s left-hand rule',
+  '7.14':'Factors affecting force on wire',
+  '7.15':'Electromagnetic induction & factors',
+  '7.16':'Generating electricity',
+  '7.17':'Transformer structure (P)',
+  '7.18':'Step-up/step-down in National Grid (P)',
+  '7.19':'Transformer voltage formula (P)',
+  '7.20':'Transformer power formula (P)',
+};
+
+const DIAG_QS = [
+  {ref:'7.1', q:'A kettle uses 2000 W of power with a current of 8 A. What unit is power measured in?', opts:['Ampere (A)','Volt (V)','Watt (W)','Ohm (Ω)'], ans:2, exp:'Power is always measured in watts (W). Current is in amperes (A) and voltage in volts (V).'},
+  {ref:'7.1', q:'What does the unit "volt" measure?', opts:['Current','Resistance','Power','Voltage / potential difference'], ans:3, exp:'Volt (V) measures voltage or potential difference — the "push" that drives current around a circuit.'},
+
+  {ref:'7.2', q:'Two magnets are brought together north pole to north pole. What happens?', opts:['They attract','They repel','Nothing happens','One loses its magnetism'], ans:1, exp:'Like poles repel. North-North or South-South will always push apart.'},
+  {ref:'7.2', q:'Which of the following is a magnetic material?', opts:['Copper','Aluminium','Iron','Plastic'], ans:2, exp:'Iron (and steel, nickel, cobalt) are magnetic materials. Copper and aluminium are not.'},
+
+  {ref:'7.3', q:'Steel is used to make permanent magnets. Why?', opts:['It is magnetically soft','It is magnetically hard','It conducts electricity','It is attracted to all metals'], ans:1, exp:'Steel is magnetically hard — it is hard to magnetise but keeps its magnetism once magnetised.'},
+  {ref:'7.3', q:'Iron is used in electromagnets rather than steel. Why?', opts:['Iron is a better conductor','Iron is magnetically soft so it loses magnetism when current stops','Iron is magnetically hard','Iron is cheaper'], ans:1, exp:'Iron is magnetically soft — it magnetises and demagnetises easily, which is exactly what you need for an electromagnet that switches on and off.'},
+
+  {ref:'7.4', q:'What do magnetic field lines show?', opts:['The path electrons travel','The direction a north pole would move','The path of electric current','Areas of no magnetic force'], ans:1, exp:'Field lines show the direction of the force on a north pole — they go from north to south outside the magnet.'},
+  {ref:'7.4', q:'Where is a magnetic field strongest around a bar magnet?', opts:['In the middle','Where field lines are furthest apart','At the poles, where field lines are closest together','It is the same everywhere'], ans:2, exp:'The field is strongest at the poles — you can tell because field lines are closest together (densest) there.'},
+
+  {ref:'7.5', q:'An iron nail is held near a magnet. What happens to the nail?', opts:['It becomes permanently magnetised','It becomes temporarily magnetised (induced magnetism)','It is repelled','Nothing happens'], ans:1, exp:'Iron is magnetically soft, so it becomes a temporary induced magnet in the field. It loses this when removed from the field.'},
+  {ref:'7.5', q:'Which material would experience induced magnetism when placed in a magnetic field?', opts:['Copper','Plastic','Steel','Wood'], ans:2, exp:'Steel is a magnetic material so it can have magnetism induced in it. Copper, plastic and wood are not magnetic.'},
+
+  {ref:'7.6', q:'In a practical investigation of field patterns, iron filings are sprinkled around a bar magnet. What do they show?', opts:['The electric field','The temperature distribution','The magnetic field line pattern','The gravitational field'], ans:2, exp:'Iron filings align with the magnetic field, mapping out the field line pattern around the magnet.'},
+  {ref:'7.6', q:'When two bar magnets are placed with opposite poles facing, iron filings between them show:', opts:['Circular rings','Curved lines from N to S connecting the magnets','Straight parallel lines between the magnets','Random scattered pattern'], ans:2, exp:'Between opposite poles the field is approximately uniform — iron filings form straight parallel lines from N to S.'},
+
+  {ref:'7.7', q:'How do you create a uniform magnetic field using two permanent magnets?', opts:['Place them end to end (N to S)','Place them side by side with same poles facing','Place them facing each other with opposite poles','Spin them around each other'], ans:2, exp:'Facing opposite poles (N facing S) creates parallel, equally spaced field lines between them — a uniform field.'},
+  {ref:'7.7', q:'What do parallel, equally spaced field lines tell you about a magnetic field?', opts:['The field is changing rapidly','The field is uniform (same strength and direction throughout)','The field is very weak','The field is circular'], ans:1, exp:'Parallel equally spaced lines mean the field has the same strength and direction everywhere — a uniform field.'},
+
+  {ref:'7.8', q:'A wire carries an electric current. What does this produce around the wire?', opts:['A gravitational field','An electric field only','A magnetic field','Heat only'], ans:2, exp:'Any current-carrying conductor produces a magnetic field around it — this is the basis of electromagnetism.'},
+  {ref:'7.8', q:'What happens to the magnetic field around a wire when the current is switched off?', opts:['It stays the same','It reverses direction','It disappears','It gets stronger'], ans:2, exp:'The magnetic field is caused by the current. No current = no magnetic field.'},
+
+  {ref:'7.9', q:'What is the core of an electromagnet typically made from?', opts:['Steel (magnetically hard)','Iron (magnetically soft)','Copper','Plastic'], ans:1, exp:'Iron is used because it is magnetically soft — it magnetises strongly when current flows and loses its magnetism when the current is switched off.'},
+  {ref:'7.9', q:'How can you increase the strength of an electromagnet?', opts:['Use fewer turns of wire','Decrease the current','Increase the number of turns of wire or increase the current','Use a steel core instead of iron'], ans:2, exp:'More turns and more current both increase the magnetic field strength of an electromagnet.'},
+
+  {ref:'7.10', q:'What shape are the magnetic field lines around a long straight wire carrying a current?', opts:['Straight lines parallel to the wire','Concentric circles centred on the wire','Figure-of-eight shapes','Straight lines perpendicular to the wire'], ans:1, exp:'The field lines form concentric circles centred on the wire — like rings around it.'},
+  {ref:'7.10', q:'The magnetic field pattern of a solenoid carrying current is similar to:', opts:['A circular ring','A straight wire','A bar magnet (with distinct N and S poles)','A uniform field between plates'], ans:2, exp:'A solenoid produces a field almost identical to a bar magnet — with a north pole at one end and a south pole at the other.'},
+
+  {ref:'7.11', q:'A charged particle moves parallel to a magnetic field. What force acts on it?', opts:['A large force perpendicular to its motion','A force in the direction of motion','No force — because it moves parallel to the field','A force that slows it down'], ans:2, exp:'A charged particle only experiences a magnetic force if it has a component of velocity perpendicular to the field. Moving parallel means zero force.'},
+  {ref:'7.11', q:'Under what condition does a moving charged particle experience a magnetic force?', opts:['Only if it is negatively charged','Only if it moves at the speed of light','When its motion is not parallel to the magnetic field','Only if the field is very strong'], ans:2, exp:'The key condition is that the particle must have a component of velocity perpendicular to the field. Any angle other than parallel (0° or 180°) produces a force.'},
+
+  {ref:'7.12', q:'A current-carrying wire is placed in a magnetic field. What is the force on it called?', opts:['Electromagnetic induction','The motor effect','The generator effect','The Hall effect'], ans:1, exp:'The force on a current-carrying wire in a magnetic field is called the motor effect — it is what makes electric motors work.'},
+  {ref:'7.12', q:'In a loudspeaker, how is sound produced?', opts:['The coil heats up and expands','Current in a coil in a magnetic field causes the coil and cone to vibrate, producing sound waves','Magnets vibrate against each other','Electricity is converted directly to sound'], ans:1, exp:'Varying current in the coil produces a varying force (motor effect) which vibrates the cone, creating sound waves matching the electrical signal.'},
+
+  {ref:'7.13', q:'Fleming\'s left-hand rule: the thumb points in the direction of...', opts:['The current','The magnetic field','The force (motion)','The voltage'], ans:2, exp:'Remember: thuMb = Motion/force, First finger = Field, seCond finger = Current (FBI with your left hand).'},
+  {ref:'7.13', q:'The current in a wire flows upward and the magnetic field points into the page. Using Fleming\'s left-hand rule, in which direction is the force?', opts:['Upward','Into the page','To the left','To the right'], ans:3, exp:'Point your second finger up (current), first finger into the page (field), and your thumb points to the left — that is the direction of force.'},
+
+  {ref:'7.14', q:'What happens to the force on a current-carrying wire in a magnetic field if the current is doubled?', opts:['Force halves','Force stays the same','Force doubles','Force quadruples'], ans:2, exp:'Force is directly proportional to current. Double the current → double the force.'},
+  {ref:'7.14', q:'If the current direction in a wire is reversed, what happens to the force?', opts:['Force increases','Force decreases','Force direction reverses','Force disappears'], ans:2, exp:'Reversing the current reverses the direction of the force — useful in motors where you need rotation.'},
+
+  {ref:'7.15', q:'A magnet is pushed into a coil of wire. What is induced?', opts:['A current only','A voltage (and a current if the circuit is complete)','A magnetic field only','Heat'], ans:1, exp:'Moving the magnet induces a voltage (EMF). If the circuit is complete, this drives a current too.'},
+  {ref:'7.15', q:'Which of the following would increase the induced voltage in a coil?', opts:['Moving the magnet more slowly','Using a weaker magnet','Increasing the number of turns in the coil','Making the coil larger in diameter'], ans:2, exp:'More turns means more field lines are cut per second — more induced voltage. Speed of motion, field strength, and number of turns all affect the induced voltage.'},
+
+  {ref:'7.16', q:'In a power station generator, what rotates inside the coil to generate electricity?', opts:['A battery','A transformer','A magnet','A resistor'], ans:2, exp:'A magnet rotating inside a coil (or a coil rotating in a magnetic field) produces an alternating current — the basis of all generators.'},
+  {ref:'7.16', q:'What type of current does a generator typically produce?', opts:['Direct current (d.c.)','Alternating current (a.c.)','Pulsed d.c.','No current — only voltage'], ans:1, exp:'As the coil rotates, the direction of the induced current reverses twice per rotation — producing alternating current (a.c.).'},
+
+  {ref:'7.17', q:'What type of voltage must be used with a transformer?', opts:['Direct current (d.c.)','Alternating current (a.c.)','Any type of voltage','High voltage d.c. only'], ans:1, exp:'Transformers only work with a.c. because the alternating current creates a constantly changing magnetic field in the core, which is needed to induce a voltage in the secondary coil.'},
+  {ref:'7.17', q:'A transformer has 100 turns on the primary and 500 turns on the secondary. What type of transformer is it?', opts:['Step-down','Isolation','Step-up','Rectifier'], ans:2, exp:'More turns on the secondary than the primary means the voltage increases — a step-up transformer.'},
+
+  {ref:'7.18', q:'Why is electricity transmitted across the National Grid at very high voltage?', opts:['To make it more dangerous','To reduce energy loss as heat in the cables','To increase the current','Because it is cheaper to produce'], ans:1, exp:'High voltage means low current (same power = V × I). Lower current means less energy wasted as heat in the resistance of the cables.'},
+  {ref:'7.18', q:'What does a step-down transformer do at the end of the National Grid?', opts:['Increases voltage for homes','Reduces voltage to a safe level for homes and businesses','Converts a.c. to d.c.','Increases current in the cables'], ans:1, exp:'Step-down transformers reduce the high transmission voltage (hundreds of thousands of volts) to the safe voltages used in homes (230V in the UK).'},
+
+  {ref:'7.19', q:'A transformer has 200 primary turns and 1000 secondary turns. The primary voltage is 230 V. What is the secondary voltage?', opts:['46 V','230 V','1150 V','2000 V'], ans:2, exp:'Vp/Vs = np/ns → 230/Vs = 200/1000 → Vs = 230 × 5 = 1150 V. More turns on secondary = higher voltage.'},
+  {ref:'7.19', q:'A step-down transformer reduces 11 000 V to 230 V. If there are 4400 turns on the primary, how many turns are on the secondary?', opts:['92','184','920','1840'], ans:0, exp:'np/ns = Vp/Vs → 4400/ns = 11000/230 → ns = 4400 × (230/11000) = 92 turns.'},
+
+  {ref:'7.20', q:'A 100% efficient transformer has a primary voltage of 230 V and primary current of 10 A. The secondary voltage is 2300 V. What is the secondary current?', opts:['100 A','10 A','1 A','23 A'], ans:2, exp:'Vp × Ip = Vs × Is → 230 × 10 = 2300 × Is → Is = 2300/2300 = 1 A. Higher voltage means lower current.'},
+  {ref:'7.20', q:'Why must current be lower on the high-voltage side of a step-up transformer?', opts:['The wire is thinner','Power in = power out, so if voltage increases, current must decrease','The resistance is higher','The transformer wastes energy'], ans:1, exp:'Conservation of energy: input power = output power. P = V × I, so if V goes up, I must go down to keep power the same.'},
+];
+
+const PRAC_QS = [
+  {ref:'7.1', q:'A motor operates at 12 V and draws a current of 3 A. Calculate the power. Give the unit in your answer.', opts:['4 W','36 W','15 W','0.25 W'], ans:1, exp:'P = V × I = 12 × 3 = 36 W. Power is in watts (W).'},
+  {ref:'7.1', q:'A lamp rated at 60 W is connected to 230 V. What current flows? (Use P = V × I)', opts:['0.26 A','3.83 A','13 800 A','60 A'], ans:0, exp:'I = P/V = 60/230 ≈ 0.26 A.'},
+
+  {ref:'7.2', q:'A student brings the north pole of a magnet close to the south pole of another magnet. What will happen?', opts:['They repel','They attract','Nothing happens','Both lose their magnetism'], ans:1, exp:'Unlike poles attract. North and south pull together.'},
+  {ref:'7.2', q:'A magnet is placed near an aluminium can. What happens?', opts:['The can is strongly attracted','The can is repelled','Nothing happens — aluminium is not magnetic','The can becomes a permanent magnet'], ans:2, exp:'Aluminium is not a magnetic material. Only iron, steel, nickel and cobalt are attracted to magnets.'},
+
+  {ref:'7.3', q:'A factory needs a magnet that can be switched on and off to pick up steel components. Which material should the core be made from?', opts:['Steel (magnetically hard)','Iron (magnetically soft)','Copper','Rubber'], ans:1, exp:'Iron (magnetically soft) loses its magnetism as soon as the current stops — perfect for a switchable electromagnet.'},
+  {ref:'7.3', q:'A compass needle must keep its magnetism permanently. Which material is best?', opts:['Iron','Copper','Steel','Aluminium'], ans:2, exp:'Steel is magnetically hard — it retains its magnetism, so it is ideal for permanent magnets like compass needles.'},
+
+  {ref:'7.4', q:'Magnetic field lines around a bar magnet always travel from _____ outside the magnet.', opts:['South to North','North to South','Inside to outside','In circles'], ans:1, exp:'Outside the magnet, field lines go from North to South. Inside the magnet they go from South to North (they are closed loops).'},
+  {ref:'7.4', q:'Two bar magnets are placed with their north poles facing each other. Describe the field pattern between them.', opts:['The lines connect the two north poles directly','The lines curve away from each other — repulsive pattern with a neutral point in the middle','The lines form a uniform parallel pattern','There are no field lines between them'], ans:1, exp:'Like poles repel, so the field lines push away from each other. There is a neutral point (zero field) midway between them.'},
+
+  {ref:'7.5', q:'An iron nail is temporarily magnetised when placed near a magnet. What name is given to this effect?', opts:['Electromagnetic induction','Induced magnetism','The motor effect','Electrostatic induction'], ans:1, exp:'Induced magnetism — the nail becomes a temporary magnet due to the external field, without being permanently magnetised.'},
+  {ref:'7.5', q:'Why does an iron nail lose its magnetism when the magnet is removed, but a steel nail keeps it?', opts:['Iron is denser than steel','Iron is magnetically soft; steel is magnetically hard','Iron is a better conductor','Steel has more electrons'], ans:1, exp:'Iron is magnetically soft — domains align easily but return to random orientation when the field is removed. Steel is magnetically hard — domains stay aligned.'},
+
+  {ref:'7.6', q:'Describe how you would use a plotting compass to map the field around a bar magnet.', opts:['Place the compass at various points and record the direction the needle points, building up the field line pattern step by step','Heat the magnet and see which direction the heat flows','Place iron filings in water and observe currents','Connect the compass to a circuit'], ans:0, exp:'A plotting compass needle aligns with the local field. Moving it from point to point and marking the north end maps out the field lines.'},
+  {ref:'7.6', q:'Iron filings are sprinkled between two magnets with opposite poles facing. What pattern do they form?', opts:['Random scatter','Concentric circles','Roughly straight parallel lines connecting the poles','Two separate sets of rings'], ans:2, exp:'Between opposite poles the field is approximately uniform — iron filings align to form roughly straight parallel lines from N to S.'},
+
+  {ref:'7.7', q:'A student wants to create a uniform magnetic field. They have two bar magnets. How should they be arranged?', opts:['End to end, same poles touching','Side by side, same poles facing','Facing each other with opposite poles, with a gap between','Stacked on top of each other'], ans:2, exp:'Opposite poles facing creates parallel equally spaced field lines between them — a uniform field.'},
+  {ref:'7.7', q:'What does a uniform magnetic field look like on a field diagram?', opts:['Concentric circles','Lines that converge at one point','Parallel, equally spaced lines in the same direction','Random curved lines'], ans:2, exp:'Uniform field = same strength and direction everywhere = parallel, equally spaced lines.'},
+
+  {ref:'7.8', q:'A student wraps more turns of wire around a nail and connects it to a battery. What happens to the magnetic field?', opts:['It disappears','It stays the same','It increases in strength','It changes direction'], ans:2, exp:'More turns (and/or more current) increases the strength of the magnetic field around the wire/coil.'},
+  {ref:'7.8', q:'A wire is connected to a battery. In which direction do the field lines circle around the wire?', opts:['The direction depends on which way the current flows — use the right-hand grip rule','Always clockwise','Always anticlockwise','They do not form circles'], ans:0, exp:'The direction depends on current direction. If you wrap your right hand around the wire with thumb pointing in current direction, fingers curl in the direction of field lines.'},
+
+  {ref:'7.9', q:'An electromagnet is made by wrapping a coil around an iron core. What happens when the current is switched off?', opts:['The iron core keeps its magnetism permanently','The iron core loses its magnetism almost immediately','The coil melts','The polarity reverses'], ans:1, exp:'Iron is magnetically soft. As soon as the current stops, the magnetic domains return to random orientation and the electromagnet switches off.'},
+  {ref:'7.9', q:'Give two ways to increase the strength of an electromagnet.', opts:['Increase current OR increase number of turns (or use a softer iron core)','Decrease current and use a steel core','Use a.c. instead of d.c.','Use thicker wire and higher voltage only'], ans:0, exp:'Strength increases with more current (stronger field per turn) or more turns (more field contributions added together).'},
+
+  {ref:'7.10', q:'How does the field pattern of a solenoid differ from a single straight wire?', opts:['They are identical','A solenoid produces a field like a bar magnet with distinct N and S poles; a wire produces circular rings','A solenoid produces circles; a wire produces a bar magnet shape','A solenoid has no field outside it'], ans:1, exp:'A solenoid\'s field lines look exactly like a bar magnet — with a clear north and south pole at each end and field lines that emerge from N and re-enter at S.'},
+  {ref:'7.10', q:'A flat circular coil carries a current. What does the magnetic field look like through the centre of the coil?', opts:['The field lines pass straight through the centre in one direction, like a solenoid but with only one turn','There is no field through the centre','The field lines form circles in the plane of the coil','The field is uniform throughout the room'], ans:0, exp:'Through the centre of a flat coil the field lines pass straight through — like a very short solenoid. They curve around the outside.'},
+
+  {ref:'7.11', q:'A proton moves to the right through a magnetic field pointing upward. Does it experience a force?', opts:['No — it only experiences forces in electric fields','Yes — because its motion is not parallel to the field','No — protons are too heavy','Yes — but only if it moves faster than light'], ans:1, exp:'The proton moves perpendicular to the field — maximum force. Only motion parallel to the field gives zero force.'},
+  {ref:'7.11', q:'An electron moves parallel to a magnetic field. What force acts on it?', opts:['A large force perpendicular to its velocity','A force opposing its motion','Zero force','A force in the direction of the field'], ans:2, exp:'Motion parallel to the field means the velocity and field vectors are parallel — the cross product is zero — so no force acts.'},
+
+  {ref:'7.12', q:'Explain how a d.c. electric motor uses the motor effect to spin.', opts:['Current in a coil in a magnetic field creates a force. A split-ring commutator reverses the current every half turn so the force always acts in the same rotational direction.','The coil heats up and expands, pushing against the magnets.','The magnets repel each other causing rotation.','Alternating current makes the coil rock back and forth.'], ans:0, exp:'Motor effect: force on current in field. Commutator reverses current every half turn to maintain continuous rotation in one direction.'},
+  {ref:'7.12', q:'A loudspeaker cone vibrates 440 times per second. What frequency of sound does it produce?', opts:['220 Hz','440 Hz','880 Hz','44 Hz'], ans:1, exp:'440 vibrations per second = 440 Hz. The cone vibration frequency directly determines the frequency (pitch) of the sound produced.'},
+
+  {ref:'7.13', q:'Using Fleming\'s left-hand rule: the index finger points in the direction of the magnetic field. The middle finger points in the direction of the current. What does the thumb show?', opts:['The direction of the induced EMF','The direction of the force (motion) on the wire','The direction electrons flow','The direction of the field lines'], ans:1, exp:'Thumb = force/Motion (thuMb). First finger = Field. seCond finger = Current. This is the FBI rule.'},
+  {ref:'7.13', q:'A horizontal wire carries a current flowing east. The magnetic field points downward (into the ground). Using Fleming\'s left-hand rule, in which direction is the force?', opts:['Upward','Downward','North','South'], ans:2, exp:'Middle finger East (current), index finger down (field), thumb points North. Force on wire is northward.'},
+
+  {ref:'7.14', q:'A student doubles the strength of the magnetic field around a wire carrying a fixed current. What happens to the force?', opts:['It stays the same','It doubles','It halves','It quadruples'], ans:1, exp:'Force is proportional to field strength. Double the field → double the force (assuming current and wire length stay the same).'},
+  {ref:'7.14', q:'A wire in a magnetic field has the current direction reversed and the field strength halved. Describe the resultant force.', opts:['Same direction, same size','Opposite direction, half the size','Same direction, half the size','Opposite direction, same size'], ans:1, exp:'Reversing current reverses the force direction. Halving field strength halves the force magnitude. Net result: opposite direction, half the size.'},
+
+  {ref:'7.15', q:'State three factors that increase the size of an induced voltage in a coil.', opts:['Moving the magnet faster, using a stronger magnet, using more turns in the coil','Moving the magnet slower, using a weaker magnet, using fewer turns','Using a steel magnet, reducing the coil diameter, increasing temperature','Using d.c., increasing resistance, using a plastic core'], ans:0, exp:'The three factors are: speed of relative motion, strength of magnet/field, and number of turns in the coil. All three increase induced voltage when increased.'},
+  {ref:'7.15', q:'A magnet is held stationary inside a coil. What voltage is induced?', opts:['A large voltage','A small constant voltage','Zero — the field must be changing to induce a voltage','A voltage equal to the magnet\'s field strength'], ans:2, exp:'Electromagnetic induction requires a changing magnetic flux. A stationary magnet in a coil produces no change — so no induced voltage.'},
+
+  {ref:'7.16', q:'In a generator, what would you do to increase the frequency of the a.c. output?', opts:['Use a weaker magnet','Rotate the coil more slowly','Rotate the coil faster','Use fewer turns in the coil'], ans:2, exp:'Faster rotation = more complete cycles per second = higher frequency. Also increases the peak voltage as a bonus.'},
+  {ref:'7.16', q:'A turbine in a power station drives a generator. The magnet makes 50 complete rotations per second. What is the frequency of the a.c. produced?', opts:['25 Hz','50 Hz','100 Hz','1 Hz'], ans:1, exp:'Each complete rotation produces one full cycle of a.c. 50 rotations per second = 50 Hz — the standard UK mains frequency.'},
+
+  {ref:'7.17', q:'Why does a transformer only work with alternating current (a.c.) and not direct current (d.c.)?', opts:['D.C. is too powerful for transformers','A.C. creates a constantly changing magnetic field in the core, which induces a voltage in the secondary coil. D.C. produces a steady field that induces nothing.','A.C. is safer','D.C. would melt the iron core'], ans:1, exp:'Induction requires a changing flux. A.c. current constantly changes → changing field → induced EMF in secondary. D.c. is steady → no change → no induction.'},
+  {ref:'7.17', q:'A transformer has 500 primary turns and 100 secondary turns. What type is it, and what does it do to the voltage?', opts:['Step-up — increases voltage','Step-down — decreases voltage','Isolation — keeps voltage the same','Rectifier — converts a.c. to d.c.'], ans:1, exp:'Fewer turns on secondary → step-down transformer → output voltage is lower than input. Here: Vs = Vp × (100/500) = Vp/5.'},
+
+  {ref:'7.18', q:'Electricity leaves a power station at about 25 000 V. It is stepped up to 400 000 V for transmission. Why?', opts:['Because high voltage is easier to generate','To reduce the current, which reduces energy loss as heat in transmission cables','Because homes require 400 000 V','To comply with safety regulations'], ans:1, exp:'Same power at higher voltage means lower current. Lower current means less P=I²R heating loss in cables. The National Grid is far more efficient at very high voltages.'},
+  {ref:'7.18', q:'Before electricity reaches homes it is stepped down to 230 V. Why?', opts:['230 V is the maximum voltage a transformer can produce','High voltages are too dangerous for domestic use; 230 V is a safer level for appliances','To increase the current for motors','Because 230 V is cheaper to produce'], ans:1, exp:'High voltage is lethal in a domestic setting. Step-down transformers reduce it to a safe and usable level (230 V in the UK) for homes and businesses.'},
+
+  {ref:'7.19', q:'A step-up transformer has 500 primary turns and 5000 secondary turns. The primary voltage is 230 V. What is the secondary voltage?', opts:['23 V','230 V','2300 V','5000 V'], ans:2, exp:'Vp/Vs = np/ns → 230/Vs = 500/5000 = 1/10 → Vs = 2300 V. Ten times more turns on secondary → ten times the voltage.'},
+  {ref:'7.19', q:'A transformer has a secondary voltage of 12 V and a primary voltage of 240 V. There are 1200 turns on the primary. How many turns are on the secondary?', opts:['6','60','600','6000'], ans:1, exp:'np/ns = Vp/Vs → 1200/ns = 240/12 = 20 → ns = 1200/20 = 60 turns.'},
+
+  {ref:'7.20', q:'A 100% efficient transformer has primary voltage 230 V, primary current 2 A, and secondary voltage 23 V. What is the secondary current?', opts:['0.2 A','2 A','20 A','200 A'], ans:2, exp:'Vp × Ip = Vs × Is → 230 × 2 = 23 × Is → Is = 460/23 = 20 A. Lower voltage → higher current to conserve power.'},
+  {ref:'7.20', q:'A transformer is 100% efficient. Input power is 1200 W. What is the output power?', opts:['600 W','1200 W','2400 W','It depends on the turns ratio'], ans:1, exp:'100% efficiency means all input power is transferred to output. Output power = input power = 1200 W. The turns ratio changes voltage and current but not power.'},
+];
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('mag_state_v2') || 'null') || {rag:{}, diag:{}, prac:{}}; }
+  catch(e) { return {rag:{}, diag:{}, prac:{}}; }
+}
+function saveState() {
+  try { localStorage.setItem('mag_state_v2', JSON.stringify(state)); } catch(e){}
+}
+let state = loadState();
+
+// ════════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════════
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('visible');
+  const tabs = {ref:0, rag:1, diag:2, results:3, practice:4};
+  document.querySelectorAll('.tab')[tabs[id]].classList.add('active');
+  if (id === 'diag') renderDiag();
+  if (id === 'results') renderResults();
+  if (id === 'practice') renderPractice();
+}
+
+// ════════════════════════════════════════════
+// RAG
+// ════════════════════════════════════════════
+function setRag(ref, colour) {
+  state.rag[ref] = colour;
+  saveState();
+  const el = document.getElementById('si-'+ref);
+  el.className = 'spec-item rated-'+colour;
+  el.querySelectorAll('.rag-btn').forEach(b => b.classList.remove('sel'));
+  el.querySelector('.rag-btn.'+colour).classList.add('sel');
+  updateRagProgress();
+}
+
+function updateRagProgress() {
+  const rated = Object.keys(state.rag).length;
+  const total = SPEC_REFS.length;
+  document.getElementById('rag-count').textContent = rated + ' / ' + total + ' rated';
+  document.getElementById('rag-prog').style.width = (rated/total*100)+'%';
+}
+
+function restoreRag() {
+  SPEC_REFS.forEach(ref => {
+    if (state.rag[ref]) setRag(ref, state.rag[ref]);
+  });
+}
+
+// ════════════════════════════════════════════
+// DIAGNOSTIC QUIZ
+// ════════════════════════════════════════════
+function renderDiag() {
+  const container = document.getElementById('diag-questions');
+  if (container.children.length > 0) { updateDiagProgress(); return; }
+
+  // Sort: rag R first, then A, then G, then unrated
+  const order = {'R':0,'A':1,'':2,'G':3};
+  const sorted = [...DIAG_QS].sort((a,b) => (order[state.rag[a.ref]||'']||2) - (order[state.rag[b.ref]||'']||2));
+
+  sorted.forEach((q, i) => {
+    const key = 'diag_' + DIAG_QS.indexOf(q);
+    const div = document.createElement('div');
+    div.className = 'quiz-item';
+    div.id = 'dq-'+key;
+    const answered = state.diag[key] !== undefined;
+    const wasCorrect = state.diag[key] === q.ans;
+    div.innerHTML = `
+      <div class="q-ref">${q.ref} — ${SPEC_LABELS[q.ref]}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,oi) => `<button class="opt-btn${answered ? (oi===q.ans?' correct':(oi===state.diag[key]?' wrong':'')) : ''}" onclick="answerDiag('${key}',${oi},${q.ans},'${q.ref}')" ${answered?'disabled':''}>${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}
+      </div>
+      ${answered ? `<div class="feedback ${wasCorrect?'ok':'bad'}">${wasCorrect?'✓ Correct! ':'✗ Incorrect. '}${q.exp}</div>` : ''}
+    `;
+    container.appendChild(div);
+  });
+  updateDiagProgress();
+}
+
+function answerDiag(key, chosen, correct, ref) {
+  state.diag[key] = chosen;
+  saveState();
+  const div = document.getElementById('dq-'+key);
+  const btns = div.querySelectorAll('.opt-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if (i === correct) b.classList.add('correct');
+    else if (i === chosen) b.classList.add('wrong');
+  });
+  const q = DIAG_QS[parseInt(key.replace('diag_',''))];
+  const ok = chosen === correct;
+  const fb = document.createElement('div');
+  fb.className = 'feedback ' + (ok?'ok':'bad');
+  fb.textContent = (ok?'✓ Correct! ':'✗ Incorrect. ') + q.exp;
+  div.appendChild(fb);
+  updateDiagProgress();
+}
+
+function updateDiagProgress() {
+  const done = Object.keys(state.diag).length;
+  const total = DIAG_QS.length;
+  document.getElementById('diag-count').textContent = done + ' / ' + total;
+  document.getElementById('diag-prog').style.width = (done/total*100)+'%';
+}
+
+// ════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════
+function renderResults() {
+  const container = document.getElementById('results-content');
+  const r = Object.values(state.rag).filter(v=>v==='R').length;
+  const a = Object.values(state.rag).filter(v=>v==='A').length;
+  const g = Object.values(state.rag).filter(v=>v==='G').length;
+
+  // work out weak specs from diagnostic
+  const weakScore = {};
+  SPEC_REFS.forEach(ref => weakScore[ref] = {wrong:0, total:0});
+  DIAG_QS.forEach((q, i) => {
+    const key = 'diag_'+i;
+    weakScore[q.ref].total++;
+    if (state.diag[key] !== undefined && state.diag[key] !== q.ans) weakScore[q.ref].wrong++;
+  });
+
+  const weakSpecs = SPEC_REFS
+    .filter(ref => weakScore[ref].wrong > 0 || state.rag[ref] === 'R')
+    .sort((a,b) => {
+      const scoreA = weakScore[a].wrong / (weakScore[a].total||1) + (state.rag[a]==='R'?.5:0);
+      const scoreB = weakScore[b].wrong / (weakScore[b].total||1) + (state.rag[b]==='R'?.5:0);
+      return scoreB - scoreA;
+    });
+
+  const diagDone = Object.keys(state.diag).length;
+  const diagCorrect = Object.values(state.diag).filter((v,i) => {
+    const keys = Object.keys(state.diag);
+    const qi = parseInt(keys[i]?.replace('diag_',''));
+    return !isNaN(qi) && DIAG_QS[qi] && v === DIAG_QS[qi].ans;
+  }).length;
+
+  // recount properly
+  let correct = 0;
+  Object.entries(state.diag).forEach(([key, chosen]) => {
+    const qi = parseInt(key.replace('diag_',''));
+    if (!isNaN(qi) && DIAG_QS[qi] && chosen === DIAG_QS[qi].ans) correct++;
+  });
+
+  container.innerHTML = `
+    <div class="card"><h3>Your RAG Summary</h3>
+      <div class="results-grid">
+        <div class="stat-card r"><div class="big">${r}</div><div class="lbl">🔴 Red — Need to revise</div></div>
+        <div class="stat-card a"><div class="big">${a}</div><div class="lbl">🟡 Amber — Nearly there</div></div>
+        <div class="stat-card g"><div class="big">${g}</div><div class="lbl">🟢 Green — Confident</div></div>
+      </div>
+    </div>
+
+    <div class="card"><h3>Diagnostic Quiz Score</h3>
+      <div class="progress-row"><span>${correct} correct out of ${diagDone} attempted</span><span>${diagDone>0?Math.round(correct/diagDone*100):0}%</span></div>
+      <div class="score-bar"><div class="score-fill" style="width:${diagDone>0?Math.round(correct/diagDone*100):0}%"></div></div>
+    </div>
+
+    ${weakSpecs.length > 0 ? `
+    <div class="card"><h3>Focus on these spec points first</h3>
+      <p style="font-size:.87rem;color:var(--muted);margin-bottom:1rem;">Based on your RAG ratings and diagnostic results, these areas need the most work:</p>
+      <ul class="priority-list">
+        ${weakSpecs.slice(0,10).map(ref => `
+          <li class="${state.rag[ref]==='R'?'hi':'md'}">
+            <span class="badge">${ref}</span>
+            <span>${SPEC_LABELS[ref]} — ${weakScore[ref].wrong}/${weakScore[ref].total} diagnostic questions wrong${state.rag[ref]==='R'?' (rated Red)':state.rag[ref]==='A'?' (rated Amber)':''}</span>
+          </li>
+        `).join('')}
+      </ul>
+    </div>` : `<div class="card" style="border-color:var(--green);background:var(--green-light)"><h3 style="color:var(--green)">Looking strong! 🟢</h3><p style="font-size:.9rem;">No major weak spots detected. Keep practising with the practice questions to maintain confidence.</p></div>`}
+
+    <div class="submit-banner">
+      <div>
+        <h4>Ready to send your results to your teacher?</h4>
+        <p>This will generate a summary for you to copy into Microsoft Forms.</p>
+      </div>
+      <button class="btn-submit" onclick="openModal()">Submit results →</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="showTab('practice')">Go to Practice Questions →</button>
+      <button class="btn btn-outline" onclick="showTab('rag')">Review RAG ratings</button>
+    </div>
+  `;
+}
+
+// ════════════════════════════════════════════
+// PRACTICE QUESTIONS
+// ════════════════════════════════════════════
+function renderPractice() {
+  const container = document.getElementById('practice-questions');
+  if (container.children.length > 0) { updatePracProgress(); return; }
+
+  // determine flagged refs
+  const flagged = new Set();
+  SPEC_REFS.forEach(ref => {
+    if (state.rag[ref] === 'R' || state.rag[ref] === 'A') flagged.add(ref);
+    DIAG_QS.forEach((q,i) => {
+      if (q.ref === ref && state.diag['diag_'+i] !== undefined && state.diag['diag_'+i] !== q.ans) flagged.add(ref);
+    });
+  });
+
+  const sorted = [...PRAC_QS].sort((a,b) => {
+    const af = flagged.has(a.ref) ? 0 : 1;
+    const bf = flagged.has(b.ref) ? 0 : 1;
+    if (af !== bf) return af - bf;
+    return SPEC_REFS.indexOf(a.ref) - SPEC_REFS.indexOf(b.ref);
+  });
+
+  if (flagged.size > 0) {
+    const notice = document.createElement('div');
+    notice.className = 'info-box';
+    notice.style.borderColor = 'var(--red)';
+    notice.style.background = 'var(--red-light)';
+    notice.style.color = 'var(--red)';
+    notice.innerHTML = '⚠️ Questions from your flagged topics appear first. Focus on these.';
+    container.appendChild(notice);
+  }
+
+  sorted.forEach((q, i) => {
+    const key = 'prac_' + PRAC_QS.indexOf(q);
+    const isFlagged = flagged.has(q.ref);
+    const div = document.createElement('div');
+    div.className = 'pq-item' + (isFlagged?' flagged':'');
+    div.id = 'pq-'+key;
+    const answered = state.prac[key] !== undefined;
+    const wasCorrect = state.prac[key] === q.ans;
+    div.innerHTML = `
+      <div class="pq-ref">${q.ref} — ${SPEC_LABELS[q.ref]}${isFlagged?'<span class="pq-tag">FOCUS AREA</span>':''}</div>
+      <div class="pq-q">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,oi) => `<button class="opt-btn${answered?(oi===q.ans?' correct':(oi===state.prac[key]?' wrong':'')):''}
+          " onclick="answerPrac('${key}',${oi},${q.ans})" ${answered?'disabled':''}>${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}
+      </div>
+      ${answered ? `<div class="feedback ${wasCorrect?'ok':'bad'}">${wasCorrect?'✓ Correct! ':'✗ Incorrect. '}${q.exp}</div>` : ''}
+    `;
+    container.appendChild(div);
+  });
+  updatePracProgress();
+}
+
+function answerPrac(key, chosen, correct) {
+  state.prac[key] = chosen;
+  saveState();
+  const div = document.getElementById('pq-'+key);
+  const btns = div.querySelectorAll('.opt-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if (i === correct) b.classList.add('correct');
+    else if (i === chosen) b.classList.add('wrong');
+  });
+  const q = PRAC_QS[parseInt(key.replace('prac_',''))];
+  const ok = chosen === correct;
+  const fb = document.createElement('div');
+  fb.className = 'feedback ' + (ok?'ok':'bad');
+  fb.textContent = (ok?'✓ Correct! ':'✗ Incorrect. ') + q.exp;
+  div.appendChild(fb);
+  updatePracProgress();
+}
+
+function updatePracProgress() {
+  const done = Object.keys(state.prac).length;
+  const total = PRAC_QS.length;
+  document.getElementById('prac-count').textContent = done + ' / ' + total;
+  document.getElementById('prac-prog').style.width = (done/total*100)+'%';
+}
+
+// ════════════════════════════════════════════
+// SUBMIT / MODAL
+// ════════════════════════════════════════════
+function buildSummaries() {
+  // RAG string
+  const ragLines = SPEC_REFS.map(ref => {
+    const r = state.rag[ref] || '-';
+    return ref + ':' + r;
+  });
+  const ragText = ragLines.join('  |  ');
+
+  // Diagnostic string
+  let correct = 0;
+  const wrongRefs = [];
+  DIAG_QS.forEach((q, i) => {
+    const key = 'diag_' + i;
+    if (state.diag[key] !== undefined) {
+      if (state.diag[key] === q.ans) correct++;
+      else if (!wrongRefs.includes(q.ref)) wrongRefs.push(q.ref);
+    }
+  });
+  const done = Object.keys(state.diag).length;
+  const pct = done > 0 ? Math.round(correct / done * 100) : 0;
+  const diagText = 'Score: ' + correct + '/' + done + ' (' + pct + '%)\n' +
+    'Weak spec points: ' + (wrongRefs.length > 0 ? wrongRefs.join(', ') : 'None identified') + '\n' +
+    'RAG Red points: ' + (SPEC_REFS.filter(r => state.rag[r] === 'R').join(', ') || 'None') + '\n' +
+    'RAG Amber points: ' + (SPEC_REFS.filter(r => state.rag[r] === 'A').join(', ') || 'None');
+
+  document.getElementById('rag-summary-text').textContent = ragText;
+  document.getElementById('diag-summary-text').textContent = diagText;
+}
+
+function openModal() {
+  buildSummaries();
+  document.getElementById('submit-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('submit-modal').classList.remove('open');
+}
+
+function copyText(boxId, btnId) {
+  const text = document.getElementById(boxId).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = btnId.includes('rag') ? 'Copy RAG ratings' : 'Copy diagnostic summary';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// Close modal if backdrop clicked
+document.getElementById('submit-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+restoreRag();
+updateRagProgress();
+</script>
+</body>
+</html>
